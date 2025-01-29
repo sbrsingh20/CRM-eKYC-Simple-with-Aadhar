@@ -2,6 +2,7 @@ import streamlit as st
 import time
 from fpdf import FPDF
 from datetime import datetime
+import pytz
 from PIL import Image
 
 # Function to generate the PDF with table and image
@@ -38,6 +39,11 @@ def generate_pdf(aadhar_number, full_name, mobile_number, gender, address, custo
         pdf.cell(col_widths[i], 10, headers[i], border=1, align='C')
     pdf.ln()
 
+    # Get the current date and time in IST
+    ist_timezone = pytz.timezone('Asia/Kolkata')
+    created_on = datetime.now(ist_timezone).strftime('%d %b %Y: %I:%M %p')
+    verified_on = created_on  # Assuming verified time is same as created time for now
+
     # Data rows (Details)
     pdf.set_font("Arial", size=12)
 
@@ -49,8 +55,8 @@ def generate_pdf(aadhar_number, full_name, mobile_number, gender, address, custo
         ("Address", address),
         ("Aadhaar ID", f"XXXX-XXXX-{aadhar_number[-4:]}"),
         ("Customer ID", customer_id),
-        ("Created On", datetime.now().strftime('%d %b %Y: %I:%M %p')),
-        ("Verified On", datetime.now().strftime('%d %b %Y: %I:%M %p')),
+        ("Created On", created_on),
+        ("Verified On", verified_on),
         ("Document", "Aadhar XML"),
         ("Uploaded Photo", "Placeholder (Image included)"),
     ]
@@ -97,8 +103,8 @@ def ekyc_verification():
             st.write(f"Address: {address}")
             st.write(f"Aadhaar ID: XXXX-XXXX-{aadhar_number[-4:]}")
             st.write(f"Customer ID: {customer_id}")
-            st.write(f"Created On: {datetime.now().strftime('%d %b %Y: %I:%M %p')}")
-            st.write(f"Verified On: {datetime.now().strftime('%d %b %Y: %I:%M %p')}")
+            st.write(f"Created On: {datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%d %b %Y: %I:%M %p')}")
+            st.write(f"Verified On: {datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%d %b %Y: %I:%M %p')}")
 
             # Path to the image
             image_path = "myPicHD.png"  # Make sure this file exists in the directory
