@@ -49,7 +49,7 @@ def generate_pdf(aadhar_number, full_name, mobile_number, gender, address, custo
         ("Address", address),
         ("Aadhaar ID", f"XXXX-XXXX-{aadhar_number[-4:]}"),
         ("Customer ID", customer_id),
-        ("Created On", "29 Jan 2025"),
+        ("Created On", datetime.now().strftime('%d %b %Y: %I:%M %p')),
         ("Verified On", datetime.now().strftime('%d %b %Y: %I:%M %p')),
         ("Document", "Aadhar XML"),
         ("Uploaded Photo", "Placeholder (Image included)"),
@@ -97,7 +97,7 @@ def ekyc_verification():
             st.write(f"Address: {address}")
             st.write(f"Aadhaar ID: XXXX-XXXX-{aadhar_number[-4:]}")
             st.write(f"Customer ID: {customer_id}")
-            st.write(f"Created On: 29 Jan 2025")
+            st.write(f"Created On: {datetime.now().strftime('%d %b %Y: %I:%M %p')}")
             st.write(f"Verified On: {datetime.now().strftime('%d %b %Y: %I:%M %p')}")
 
             # Path to the image
